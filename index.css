@@ -206,6 +206,32 @@
   .product-card h3{color:#fff;font-size:1.08rem;margin:0 0 10px;font-weight:700;}
   .product-card p{color:#a9aed6;font-size:0.9rem;line-height:1.65;margin:0;}
 
+  /* ---------- Media ---------- */
+  .media{background:var(--white);}
+  .media-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+  .media-card{
+    display:block;border-radius:var(--radius);overflow:hidden;
+    border:1px solid #eceafb;background:#faf9ff;text-decoration:none;color:inherit;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .media-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(139,47,240,0.4);
+    box-shadow:0 16px 30px -18px rgba(28,20,60,0.35);
+  }
+  .media-thumb{position:relative;width:100%;aspect-ratio:16/9;background:var(--navy);overflow:hidden;}
+  .media-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .play-icon{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:48px;height:48px;border-radius:50%;
+    background:rgba(20,14,40,0.55);color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-size:16px;padding-left:3px;box-sizing:border-box;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .media-card:hover .play-icon{background:var(--purple);transform:translate(-50%,-50%) scale(1.08);}
+  .media-card h3{margin:0;padding:16px 18px;font-size:0.98rem;font-weight:700;color:var(--ink);line-height:1.4;}
+
   /* ---------- Contact ---------- */
   .contact{background:var(--paper);}
   .contact-panel{
@@ -334,11 +360,13 @@
     .nav-toggle{display:block;}
     .about-grid{grid-template-columns:1fr;gap:40px;}
     .product-grid{grid-template-columns:repeat(2,1fr);}
+    .media-grid{grid-template-columns:repeat(2,1fr);}
     .contact-panel{grid-template-columns:1fr;}
   }
   @media (max-width: 560px){
     section{padding:80px 6vw;}
     .product-grid{grid-template-columns:1fr;}
+    .media-grid{grid-template-columns:1fr;}
     .hero{padding-top:110px;}
     .contact-form-panel{padding:28px;}
     .form-row{grid-template-columns:1fr;}
