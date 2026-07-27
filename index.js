@@ -1,3 +1,29 @@
+const aboutTrack = document.getElementById('about-carousel-track');
+const aboutDots = document.querySelectorAll('#about-carousel-dots .dot');
+
+if (aboutTrack && aboutDots.length) {
+  const slides = aboutTrack.querySelectorAll('.carousel-slide');
+
+  aboutDots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      slides[Number(dot.dataset.index)].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    });
+  });
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const index = Array.from(slides).indexOf(entry.target);
+        aboutDots.forEach((dot) => dot.classList.remove('active'));
+        aboutDots[index]?.classList.add('active');
+      });
+    },
+    { root: aboutTrack, threshold: 0.6 }
+  );
+  slides.forEach((slide) => observer.observe(slide));
+}
+
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 
