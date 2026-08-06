@@ -24,6 +24,23 @@ if (aboutTrack && aboutDots.length) {
   slides.forEach((slide) => observer.observe(slide));
 }
 
+const switcherTabs = document.querySelectorAll('.switcher-tab');
+
+if (switcherTabs.length) {
+  const items = document.querySelectorAll('.switcher-item');
+  const media = document.querySelectorAll('.switcher-media-item');
+
+  switcherTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+      switcherTabs.forEach((t) => t.classList.remove('active'));
+      tab.classList.add('active');
+      items.forEach((item) => item.classList.toggle('active', item.dataset.item === target));
+      media.forEach((el) => el.classList.toggle('active', el.dataset.item === target));
+    });
+  });
+}
+
 const contactForm = document.getElementById('contact-form');
 const formStatus = document.getElementById('form-status');
 
