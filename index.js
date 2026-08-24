@@ -107,9 +107,19 @@ if (contactForm) {
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(data).toString()
     })
+      .then((response) => {
+        if (!response.ok) throw new Error('폼 제출 실패: ' + response.status);
+      })
       .then(() => {
         contactForm.reset();
         formStatus.textContent = '문의가 접수되었습니다. 빠르게 답변드리겠습니다.';
+        if (typeof gtag === 'function') {
+          gtag('event', 'conversion', {
+            'send_to': 'AW-16881807197/z0HeCJXUrOUcEN3e7_E-',
+            'value': 1.0,
+            'currency': 'KRW'
+          });
+        }
       })
       .catch(() => {
         formStatus.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
