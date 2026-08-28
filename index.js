@@ -111,6 +111,10 @@ if (contactForm) {
         if (!response.ok) throw new Error('폼 제출 실패: ' + response.status);
       })
       .then(() => {
+        const name = data.get('name') || '';
+        const email = data.get('email') || '';
+        const message = data.get('message') || '';
+
         contactForm.reset();
         formStatus.textContent = '문의가 접수되었습니다. 빠르게 답변드리겠습니다.';
         if (typeof gtag === 'function') {
@@ -120,6 +124,11 @@ if (contactForm) {
             'currency': 'KRW'
           });
         }
+
+        // Netlify 제출과 별개로, 입력한 내용을 담아 사용자 메일 앱의 작성창도 함께 띄움
+        const mailtoSubject = encodeURIComponent(`웹사이트 문의 - ${name}`);
+        const mailtoBody = encodeURIComponent(`이름: ${name}\n이메일: ${email}\n\n${message}`);
+        window.location.href = `mailto:support@dmension.co.kr?subject=${mailtoSubject}&body=${mailtoBody}`;
       })
       .catch(() => {
         formStatus.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
