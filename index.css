@@ -209,6 +209,7 @@
   .switcher-name{color:#fff;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:800;margin:0 0 30px;}
   .switcher-tagline{color:#eef0fc;font-size:1.25rem;font-weight:500;line-height:1.5;margin:0 0 22px;max-width:480px;}
   .switcher-status{color:#8fd8ce;font-size:0.96rem;line-height:1.65;margin:0;max-width:460px;}
+  .switcher-cta{display:inline-flex;margin-top:26px;}
   .switcher-media{
     position:relative;width:100%;aspect-ratio:4/3;
   }
@@ -290,7 +291,7 @@
     background:linear-gradient(135deg,#0a1230,#1a2470);
     border-radius:28px;
     padding:64px 5vw;
-    display:grid;grid-template-columns:1.2fr 1fr;gap:40px;
+    display:grid;grid-template-columns:0.85fr 1.15fr;gap:40px;align-items:start;
     position:relative;overflow:hidden;
   }
   .contact-panel::after{
@@ -320,12 +321,11 @@
   .contact-row a.value:hover{color:var(--teal);}
 
   .contact-form-panel{
-    max-width:900px;
-    margin:40px auto 0;
+    position:relative;z-index:1;
     background:var(--white);
     border:1px solid #eceafb;
     border-radius:var(--radius);
-    padding:44px;
+    padding:40px;
   }
   .contact-form-panel h3{margin:0 0 8px;font-size:1.3rem;font-weight:800;}
   .contact-form-panel > p{margin:0 0 28px;color:var(--muted);line-height:1.7;}
@@ -334,14 +334,32 @@
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
   .form-group{display:flex;flex-direction:column;gap:8px;}
   .form-group label{font-size:13px;font-weight:700;color:var(--ink);}
-  .form-group input,.form-group textarea{
+  .form-group input,.form-group select,.form-group textarea{
     border:1.5px solid #e2e2f0;border-radius:10px;padding:12px 14px;
     font-family:inherit;font-size:0.95rem;color:var(--ink);
     background:var(--paper);transition:border-color .2s ease;resize:vertical;
   }
-  .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--purple);}
+  .form-group select{appearance:auto;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{outline:none;border-color:var(--purple);}
   .contact-form button{align-self:flex-start;border:none;cursor:pointer;}
   .form-status{margin:0;font-size:0.9rem;color:var(--teal);min-height:1.2em;}
+
+  /* ---------- Thanks page ---------- */
+  .thanks-section{
+    padding:190px 5vw 140px;text-align:center;max-width:680px;margin:0 auto;
+  }
+  .thanks-icon{
+    width:72px;height:72px;border-radius:50%;margin:0 auto 28px;
+    background:linear-gradient(135deg,var(--purple),var(--purple-2));
+    color:#fff;font-size:32px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .thanks-section h1{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:800;margin:0 0 18px;}
+  .thanks-section p{color:var(--muted);font-size:1.05rem;line-height:1.8;margin:0 0 12px;}
+  .thanks-section .thanks-sla{color:var(--ink);font-weight:700;}
+  .thanks-section .thanks-actions{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap;}
+  .thanks-section .btn-ghost{border-color:#d8d5ee;color:var(--ink);}
+  .thanks-section .btn-ghost:hover{background:#f2f0fc;border-color:var(--purple);}
 
   /* ---------- Specs (Features page) ---------- */
   .specs{background:var(--white);}
@@ -406,13 +424,14 @@
     border-top:1px solid rgba(255,255,255,0.08);
     flex-wrap:wrap;gap:16px;
   }
-  footer .logo img{height:24px;opacity:0.9;}
+  footer .logo img{height:24px;}
   footer .copy{color:#7a80ab;font-size:12.5px;}
 
   /* ---------- Responsive ---------- */
   @media (max-width: 920px){
     nav{position:fixed;top:64px;left:0;right:0;background:#0a1230;flex-direction:column;padding:20px 24px;gap:18px;transform:translateY(-130%);transition:transform .3s ease;border-bottom:1px solid rgba(255,255,255,0.08);}
     nav.open{transform:translateY(0);}
+    nav a{color:#fff;}
     .nav-toggle{display:block;}
     .carousel-slide{width:70%;}
     .switcher-tabs{flex-wrap:wrap;}

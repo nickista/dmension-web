@@ -1,7 +1,38 @@
+// contact.html 진입 시 쿼리 파라미터(?product=atlas&ref=products)로
+// 관심 제품 자동 선택 + 어느 페이지에서 왔는지를 폼에 반영
+const productSelect = document.getElementById('product');
+const referrerField = document.getElementById('referrer-page-field');
+
+if (productSelect || referrerField) {
+  const params = new URLSearchParams(window.location.search);
+  const productParam = params.get('product');
+  const refParam = params.get('ref');
+
+  if (productSelect && productParam) {
+    const hasOption = Array.from(productSelect.options).some((opt) => opt.value === productParam);
+    if (hasOption) productSelect.value = productParam;
+  }
+
+  if (referrerField) {
+    let refValue = refParam || document.referrer || '';
+    // 제품 탭에서 넘어온 경우 어느 제품이었는지까지 레퍼러 값에 함께 반영 (예: products-atlas)
+    if (productParam) refValue = refValue ? `${refValue}-${productParam}` : productParam;
+    referrerField.value = refValue;
+  }
+}
+
 const contactCtaBtn = document.getElementById('contact-cta-btn');
 
 if (contactCtaBtn) {
   contactCtaBtn.addEventListener('click', function (e) {
+    // 제품 탭 화면(products.html)에서 클릭한 경우, 현재 보고 있던 제품을 관심 제품으로 함께 전달
+    const activeTab = document.querySelector('.switcher-tab.active');
+    if (activeTab && activeTab.dataset.target) {
+      const url = new URL(contactCtaBtn.getAttribute('href'), window.location.href);
+      url.searchParams.set('product', activeTab.dataset.target);
+      contactCtaBtn.setAttribute('href', url.pathname + url.search);
+    }
+
     const destination = contactCtaBtn.getAttribute('href');
     if (typeof gtag !== 'function') return;
 
@@ -111,24 +142,8 @@ if (contactForm) {
         if (!response.ok) throw new Error('폼 제출 실패: ' + response.status);
       })
       .then(() => {
-        const name = data.get('name') || '';
-        const email = data.get('email') || '';
-        const message = data.get('message') || '';
-
-        contactForm.reset();
-        formStatus.textContent = '문의가 접수되었습니다. 빠르게 답변드리겠습니다.';
-        if (typeof gtag === 'function') {
-          gtag('event', 'conversion', {
-            'send_to': 'AW-16881807197/z0HeCJXUrOUcEN3e7_E-',
-            'value': 1.0,
-            'currency': 'KRW'
-          });
-        }
-
-        // Netlify 제출과 별개로, 입력한 내용을 담아 사용자 메일 앱의 작성창도 함께 띄움
-        const mailtoSubject = encodeURIComponent(`웹사이트 문의 - ${name}`);
-        const mailtoBody = encodeURIComponent(`이름: ${name}\n이메일: ${email}\n\n${message}`);
-        window.location.href = `mailto:support@dmension.co.kr?subject=${mailtoSubject}&body=${mailtoBody}`;
+        // 전환 이벤트는 thanks.html 로드 시점에 발생 (페이지 로드 기반이라 더 안정적으로 측정됨)
+        window.location.href = 'thanks.html';
       })
       .catch(() => {
         formStatus.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
