@@ -126,27 +126,6 @@ if (switcherTabs.length) {
   });
 }
 
-const contactForm = document.getElementById('contact-form');
-const formStatus = document.getElementById('form-status');
-
-if (contactForm) {
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const data = new FormData(contactForm);
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error('폼 제출 실패: ' + response.status);
-      })
-      .then(() => {
-        // 전환 이벤트는 thanks.html 로드 시점에 발생 (페이지 로드 기반이라 더 안정적으로 측정됨)
-        window.location.href = 'thanks.html';
-      })
-      .catch(() => {
-        formStatus.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
-      });
-  });
-}
+// 폼은 Netlify가 처리하도록 네이티브 POST로 제출한다.
+// (AJAX 제출은 Netlify reCAPTCHA와 호환되지 않아 제거함 — 제출 성공 시
+//  action="/thanks.html"로 리다이렉트되고 전환 이벤트는 thanks.html 로드 시 발생)

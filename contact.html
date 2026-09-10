@@ -82,7 +82,7 @@
     <div class="contact-form-panel">
       <h3>빠른 문의 보내기</h3>
       <p>아래 양식을 작성해 주시면 담당자가 빠르게 확인 후 답변드립니다.</p>
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form" id="contact-form" action="/thanks.html">
+      <form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true" netlify-honeypot="bot-field" class="contact-form" id="contact-form" action="/thanks.html">
       <input type="hidden" name="form-name" value="contact">
       <input type="hidden" name="referrer_page" id="referrer-page-field" value="">
       <p class="hidden-field"><label>Leave this field empty: <input name="bot-field"></label></p>
@@ -121,8 +121,8 @@
         <label for="message">문의 내용</label>
         <textarea id="message" name="message" rows="5" required></textarea>
       </div>
+      <div data-netlify-recaptcha="true"></div>
       <button type="submit" class="cta-btn">문의 보내기</button>
-      <p class="form-status" id="form-status" aria-live="polite"></p>
     </form>
     </div>
   </div>
