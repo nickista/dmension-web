@@ -134,5 +134,47 @@
 </footer>
 
 <script src="index.js"></script>
+<script>
+// 문의 폼: 국내(대한민국) 전화번호 형식 강제 + 해외 접속 시 안내.
+// 최종 차단은 Netlify Edge Function(kr-only-forms)이 서버에서 처리하고,
+// 아래는 실제 사용자에게 이유를 알려 주기 위한 클라이언트 보조 장치다.
+(function () {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var phone = document.getElementById('phone');
+
+  function isKoreanPhone(raw) {
+    var s = (raw || '').replace(/[\s()\-.]/g, '');
+    s = s.replace(/^\+?82/, '0');   // +82 → 0 으로 정규화
+    if (s.charAt(0) === '+') return false;   // 그 외 국가코드(+1, +91 ...) 거부
+    return /^0\d{8,10}$/.test(s);            // 국내 번호: 0으로 시작, 총 9~11자리
+  }
+
+  form.addEventListener('submit', function (e) {
+    if (!isKoreanPhone(phone.value)) {
+      e.preventDefault();
+      phone.setCustomValidity('국내(대한민국) 전화번호를 입력해 주세요. 예: 010-1234-5678');
+      phone.reportValidity();
+    }
+  });
+  phone.addEventListener('input', function () { phone.setCustomValidity(''); });
+
+  // 해외 IP면 폼을 잠그고 안내 문구를 노출한다. (조회 실패 시엔 막지 않음)
+  fetch('https://get.geojs.io/v1/ip/country.json')
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      if (!d || !d.country || d.country === 'KR') return;
+      form.querySelectorAll('input, select, textarea, button').forEach(function (el) {
+        el.disabled = true;
+      });
+      var note = document.createElement('p');
+      note.style.cssText = 'color:#c0392b;font-weight:700;margin-top:1rem';
+      note.textContent = '문의 접수는 대한민국 내에서만 가능합니다. '
+        + '(Inquiries are accepted from within South Korea only.)';
+      form.appendChild(note);
+    })
+    .catch(function () {});
+})();
+</script>
 </body>
 </html>
