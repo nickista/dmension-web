@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N3ZWMWRK');</script>
+<!-- End Google Tag Manager -->
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16881807197"></script>
 <script>
@@ -27,6 +34,10 @@
 <link rel="stylesheet" href="index.css">
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N3ZWMWRK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 <header>
   <div class="logo">
@@ -63,6 +74,13 @@
   if (typeof gtag === 'function') {
     gtag('event', 'conversion', {
       'send_to': 'AW-16881807197/z0HeCJXUrOUcEN3e7_E-',
+      'value': 1.0,
+      'currency': 'KRW'
+    });
+    // GA4 쪽에도 리드 전환을 남긴다 (위 conversion 이벤트는 send_to로
+    // Google Ads 전환 ID에만 고정돼 있어 GA4로는 안 들어감).
+    gtag('event', 'generate_lead', {
+      'send_to': 'G-22ZYNW6BC5',
       'value': 1.0,
       'currency': 'KRW'
     });
